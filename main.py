@@ -18,7 +18,7 @@ class CryptoBreakoutBot:
         print(allSymbols)
         
         while (True):
-            for fsym in allSymbols[:10]:
+            for fsym in allSymbols:
                 # ignore if already found this symbol
                 if self.alreadyFound(fsym):
                     continue
