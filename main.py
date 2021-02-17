@@ -20,17 +20,17 @@ class CryptoBreakoutBot:
         while (True):
             for fsym in allSymbols:
                 # ignore if already found this symbol
-                if self.alreadyFound(fsym):
+                if self.already_found(fsym):
                     continue
 
-                isConsolidating, isPumping = strategy.check_status(fsym)
+                isConsolidating, isPumping = strategy.check_status_now(fsym)
                 print(f"{fsym} is consolidating: {isConsolidating} is breaking out: {isPumping}")
 
                 if isConsolidating and isPumping:
                     self.bot.sendMessage(chat_id=self.chat_id, text=f"{fsym} is breaking out")
                     self.foundSymbols[fsym] = datetime.timestamp(datetime.now()) # add the symbol to the found dict with the corresponding timestamp
 
-    def alreadyFound(self, fsym):
+    def already_found(self, fsym):
         if fsym not in self.foundSymbols:
             return False
         lastTimestamp = self.foundSymbols[fsym] # last time this symbol was found
