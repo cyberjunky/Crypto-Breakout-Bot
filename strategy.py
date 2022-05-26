@@ -36,6 +36,8 @@ def compute_ATR_1h(closes, highes, lowes) -> float:
 def check_status_between_timestamps(fsym, startTsMs, endTsMs, debug=False):
     # get 5m symbol candles
     df = util.get_symbol_data(fsym, startTsMs, endTsMs)
+    if df is None:
+         return (False, False)
     highes = np.array(df['high']).astype(np.float64)
     lowes = np.array(df['low']).astype(np.float64)
     closes = np.array(df['close']).astype(np.float64)
