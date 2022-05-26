@@ -46,12 +46,14 @@ def get_symbol_data(fsym, startTsMs, endTsMs=None, interval='5m'):
         print(f"{fsym} error in request {url}")
         return None
     res = res.json() # convert to json
-    res = np.array(res) # convert to numpy array
-    res = np.delete(res, obj=[6, 7, 8, 9, 10, 11], axis=1) # remove useless columns
-
-    df = pd.DataFrame(res, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
-    df.set_index('timestamp', inplace=True) # set timestamp as dataframe index
-    return df
+    if res:
+        df = pd.DataFrame.from_dict(res)
+        df = df.loc[:, :5]
+        df.columns = ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+        df.set_index('timestamp', inplace=True) # set timestamp as dataframe index
+        return df
+    else:
+        return None
 
 
 
